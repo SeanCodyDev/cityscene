@@ -33,6 +33,7 @@ router.get('/', function(req, res, next) {
 
 });
 
+//Yelp router
 router.post('/search', function(req, res, next) {
 
 	console.log(req.body);
@@ -41,14 +42,23 @@ router.post('/search', function(req, res, next) {
 	console.log('hello from client');
 	client.search({
 		term: req.body.search,
-		location: 'indianapolis, in'
+		location: req.body.location
+		// location: 'indianapolis, in'
 	}).then(response => {
 		console.log(response.jsonBody.businesses);
   		// res.render('index', { title: 'Sean', color: 'blue', place: response.jsonBody.businesses }); 
-  		res.json(response.jsonBody.businesses);
 
+  		let yelpResponse = response.jsonBody.businesses;
+  		clientTwitter.get(`https://api.twitter.com/1.1/search/tweets.json?q=%23${req.body.search}`, function(error, tweets, response) {
+  			if(error) throw error;
+	  console.log(tweets);  // The results. 
+	  // console.log(response);  // Raw response object. 
 
+		// res.json(response.jsonBody.businesses);
+		console.log(typeof yelpResponse);
+		res.json({'yelp': yelpResponse, 'twitter': tweets});
 
+});
 	});
 
 	}
@@ -56,7 +66,25 @@ router.post('/search', function(req, res, next) {
 
 
 
+var Twitter = require('twitter');
 
+var clientTwitter = new Twitter({
+  consumer_key: 'tTZIiRLPCuQuy31QRoOAzDgze',
+  consumer_secret: 'GIEmXCIAvt5lWMkGTxqBSOiTNa6Bajdnj4Nkhg6ceqjeU9SIS6',
+  access_token_key: '218720772-Q9e5eOWgeqSDVzI4DXPQLGcXLUuFEhf1W6sOFSuT',
+  access_token_secret: 'rp0xYbJ18FgGpDs4SCl0PQKyFPYnxgIHvn4zIwRVuDjW9'
+});
+
+
+//replace indianapolis with searchword
+router.get('/silly', function(req, res, next) {
+	console.log('silly');
+	clientTwitter.get('https://api.twitter.com/1.1/search/tweets.json?q=%23indianapolis', function(error, tweets, response) {
+	  if(error) throw error;
+	  console.log(tweets);  // The favorites. 
+	  // console.log(response);  // Raw response object. 
+	});
+});
 
 
 
