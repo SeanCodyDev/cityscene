@@ -1,6 +1,5 @@
 //---- NEXT STEPS ----
-// Fix results images
-// Make image and results text both anchor links to Yelp
+//limit to first 5 results
 
 console.log('hello');
 let SEARCH_CITY = "";
@@ -29,10 +28,10 @@ function handleSubmitClick(){
 //function that returns serach results for city for coffee, bars, restaurants, and things to do
 function cityYelpResults(){
 	console.log('cityYelpResults ran');
+	$('.js-results').html(``);
 	let searchTerms = ['coffee', 'restaurants', 'nightlife', 'things to do'];
 	let resultsToRender = ``;
-	let numberOfResults = 5;
-	for (let i=0; i<numberOfResults; i++){
+	for (let i=0; i<searchTerms.length; i++){
 		$.ajax({
             url: "/search",
             type: 'POST',
@@ -42,10 +41,10 @@ function cityYelpResults(){
             },
             success: function(res) {
                 // console.log(res);
-                // $('.js-results').html(res);
             	let htmlPassed = renderHtml(res, searchTerms[i]);
             	resultsToRender += htmlPassed;
             	console.log(resultsToRender);
+            	// $('.js-results').html(resultsToRender);
             	//ERROR: resultsToRender is not being updated outside of this callback function
             	//ALTERNATIVE: In renderHtml function, clear current results div and render in that function
             }
@@ -78,15 +77,16 @@ function cityYelpResults(){
 function renderHtml(res, searchTerm){
 	console.log('renderHtml ran');
 	let htmlToRender = "";
-	for (let i=0; i<res.length; i++){
-		htmlToRender += `<li>${res[i]['name']}</li>`
+	let numberOfResults = 5;
+	for (let i=0; i<numberOfResults; i++){
+		htmlToRender += `<a href=${res[i]['url']} target="_blank"><li><img class="results-img" src=${res[i]['image_url']}>${res[i]['name']}</li></a>`
 	}
 	let htmlToPass = `
 		<h2>${searchTerm}</h2>
 		<ul>
 			${htmlToRender}
 		</ul>`;
-	return htmlToPass;
+	$('.js-results').append(htmlToPass);
 }
 
 handleSubmitClick();
