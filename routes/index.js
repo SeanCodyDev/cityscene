@@ -41,7 +41,8 @@ router.post('/search', function(req, res, next) {
 	console.log('hello from client');
 	client.search({
 		term: req.body.search,
-		location: 'indianapolis, in'
+		location: req.body.location
+		// location: 'indianapolis, in'
 	}).then(response => {
 		console.log(response.jsonBody.businesses);
   		// res.render('index', { title: 'Sean', color: 'blue', place: response.jsonBody.businesses }); 
