@@ -1,26 +1,43 @@
 //----- NEXT STEPS -----
-//2) News search service - Bing
-//https://www.npmjs.com/package/node-bing-api
+//1) Create search buttons
+//2) Connect Bing News API to client side
+
 
 let SEARCH_CITY = "";
+let CITIES = [
+	{city: "New York, NY", path: "nyc"},
+	{city: "Chicago, IL", path: "chicago"},
+	{city: "Boston, MA", path: "boston"},
+	{city: "Miami, FL", path: "miami"},
+	{city: "Nashville, TN", path: "nashville"},
+
+
+
+
+];
 
 //function that takes in a city search term and assigns it so a global variable SEARCH_TERM
 // Ideally, this takes in a search term and somehow validates it before assigning it to SEARCH_CITY
 // As for creating an MVP, it may be simpler to create hard-coded button options for popular US destinations (e.g. New York, NY; Nashville, TN, etc.)
-function takeSearchTerm(){
-	console.log('takeSearchTerm ran');
-	SEARCH_CITY = $('#js-query').val();
-	$('#js-query').val("");
-	console.log(`SEARCH_CITY is ${SEARCH_CITY}`);
+// function takeSearchTerm(){
+// 	console.log('takeSearchTerm ran');
+// 	SEARCH_CITY = $(this).attr("value");
+// 	// $('#js-query').val("");
+// 	console.log(`SEARCH_CITY is ${SEARCH_CITY}`);
 
-};
+// };
 
 //function that handles the click of the Submit button
 function handleSubmitClick(){
-	$('#js-query-button').click(e => {
+	$('.js-search-form').on('click','.js-city-button', e => {
+
 		console.log('handleSubmitClick ran');
 		e.preventDefault();
-		takeSearchTerm();
+		e.stopPropagation();
+		SEARCH_CITY = $(e.currentTarget).text();
+		console.log(logValue);
+		console.log(`SEARCH_CITY is ${SEARCH_CITY}`);
+		// takeSearchTerm();
 		cityYelpPlaces();
 		cityYelpEvents();
 		cityTwitterResults();
@@ -155,4 +172,15 @@ function renderTwitterHtml(res, searchTerm){
 	$('.js-twitter-results').append(htmlToPass);
 }
 
+function renderButtons(cities){
+	let citiesButtons = "";
+	for (let i=0; i<cities.length; i++){
+		citiesButtons += `
+		<button class="js-city-button" type="submit" value=${cities[i]['city']}>${cities[i]['city']}</button>
+		`
+	}
+	$('.js-search-form').html(citiesButtons);
+}
+
 handleSubmitClick();
+renderButtons(CITIES);
