@@ -1,11 +1,12 @@
-//---- NEXT STEPS ----
-//limit to first 5 results
+//----- NEXT STEPS -----
+//2) News search service - Bing
+//https://www.npmjs.com/package/node-bing-api
 
-console.log('hello');
 let SEARCH_CITY = "";
 
 //function that takes in a city search term and assigns it so a global variable SEARCH_TERM
-//future feature needs to validate input against cities in Google Maps
+// Ideally, this takes in a search term and somehow validates it before assigning it to SEARCH_CITY
+// As for creating an MVP, it may be simpler to create hard-coded button options for popular US destinations (e.g. New York, NY; Nashville, TN, etc.)
 function takeSearchTerm(){
 	console.log('takeSearchTerm ran');
 	SEARCH_CITY = $('#js-query').val();
@@ -14,26 +15,30 @@ function takeSearchTerm(){
 
 };
 
-//function that handles the click of the submit button
+//function that handles the click of the Submit button
 function handleSubmitClick(){
 	$('#js-query-button').click(e => {
 		console.log('handleSubmitClick ran');
 		e.preventDefault();
 		takeSearchTerm();
-		cityYelpResults();
+		cityYelpPlaces();
+		cityYelpEvents();
+		cityTwitterResults();
+
 		});
 };
 
 
-//function that returns serach results for city for coffee, bars, restaurants, and things to do
-function cityYelpResults(){
-	console.log('cityYelpResults ran');
-	$('.js-results').html(``);
+//function that returns search results for city for coffee, bars, restaurants, and things to do
+//Known Issues: None
+function cityYelpPlaces(){
+	console.log('cityYelpPlaces ran');
+	$('.js-yelp-results').html(``);
 	let searchTerms = ['coffee', 'restaurants', 'nightlife', 'things to do'];
 	let resultsToRender = ``;
 	for (let i=0; i<searchTerms.length; i++){
 		$.ajax({
-            url: "/search",
+            url: "/searchYelpPlaces",
             type: 'POST',
             data: {
             	search: searchTerms[i],
@@ -41,41 +46,65 @@ function cityYelpResults(){
             },
             success: function(res) {
                 // console.log(res);
-            	let htmlPassed = renderHtml(res, searchTerms[i]);
-            	resultsToRender += htmlPassed;
-            	console.log(resultsToRender);
-            	// $('.js-results').html(resultsToRender);
-            	//ERROR: resultsToRender is not being updated outside of this callback function
-            	//ALTERNATIVE: In renderHtml function, clear current results div and render in that function
+            	renderYelpPlacesHtml(res, searchTerms[i]);
+
             }
         });
 
 	}
-	console.log(resultsToRender);
-	$('.js-results').html(`<p>lorem ipsum</p> ${resultsToRender}`);
 };
 
-// $('button').click((e)=>{
-// 	// e.preventDefault();
-// 	// let searchTerm = $('#js-query').val();
-// 	$.ajax({
-//             url: "/search",
-//             type: 'POST',
-//             data: {
-//             	search: searchTerm	
-//             },
-//             success: function(res) {
-//                 console.log(res);
-//                 $('.js-results').html(res);
-//             	renderHtml(res);
-//             }
-//         });
-//  })
+//function that returns event results for city
+//this uses a different API endpoint than the search API
+//currently hardcoded to test "indianapolis-in-us"
+//Known Issues: currently not working... see routes/index.js
+function cityYelpEvents(){
+	console.log('cityYelpEvents ran');
+	$('.js-yelp-events').html(``);
+	let resultsToRender = ``;
+	$.ajax({
+		url: "/searchYelpEvents",
+		type: 'POST',
+		data: {
+			search: "events",
+			location: SEARCH_CITY
+		},
+		success: function(res) {
+                console.log(res);
+                renderYelpEventsHtml(res);
 
-//function to structure HTML for results
+            }
+        });
+
+};
+
+// HOW do we display these results in the typical Twitter styling, including anchor links to handles and hashtags???
+// Tweet HTML/CSS: https://codepen.io/jsweetie/pen/dXLyYG, 
+//If there is a space in the city name (e.g. New York), the space needs to be removed - this can be addressed with hard-coded button search options
+function cityTwitterResults(){
+	console.log('cityTwitterResults ran');
+	$('.js-twitter-results').html(``);
+	let resultsToRender = ``;
+	let searchTerm=`#${SEARCH_CITY}`;
+	$.ajax({
+            url: "/searchTwitter",
+            type: 'POST',
+            data: {
+            	search: SEARCH_CITY,
+            	result_type: "popular"
+            },
+            success: function(res) {
+            	console.log(res);
+            	renderTwitterHtml(res, searchTerm);
+            }
+        });
+
+}
+
+//function to structure and render HTML for YelpPlaces results
 //TO-DO: modify terms to be more descriptive and to have less redundancy
-function renderHtml(res, searchTerm){
-	console.log('renderHtml ran');
+function renderYelpPlacesHtml(res, searchTerm){
+	console.log('renderYelpPlacesHtml ran');
 	let htmlToRender = "";
 	let numberOfResults = 5;
 	for (let i=0; i<numberOfResults; i++){
@@ -86,7 +115,44 @@ function renderHtml(res, searchTerm){
 		<ul>
 			${htmlToRender}
 		</ul>`;
-	$('.js-results').append(htmlToPass);
+	$('.js-yelp-results').append(htmlToPass);
+}
+
+//function to structure and render HTML for YelpEvents results
+//TO-DO: modify terms to be more descriptive and to have less redundancy
+function renderYelpEventsHtml(res){
+	console.log('renderYelpEventsHtml ran');
+	let htmlToRender = "";
+	let numberOfResults = 5;
+	for (let i=0; i<numberOfResults; i++){
+		htmlToRender += `<a href=${res[i]['url']} target="_blank"><li><img class="results-img" src=${res[i]['image_url']}>${res[i]['name']}</li></a>`
+	}
+	let htmlToPass = `
+		<h2>Events</h2>
+		<ul>
+			${htmlToRender}
+		</ul>`;
+	$('.js-yelp-events').append(htmlToPass);
+}
+
+
+//function to stucutre and render HTML for Twitter Results
+//TO-DO: insert anchor links
+//TO-DO: include user images
+function renderTwitterHtml(res, searchTerm){
+	console.log('renderTwitterHtml ran');
+	let htmlToRender = "";
+	let numberOfResults = 5;
+	for (let i=0; i<Math.min(numberOfResults, res.statuses.length); i++){
+		htmlToRender += `<li>${res.statuses[i].text}</li>`
+	}
+	let htmlToPass = `
+		<h2><a href="https://twitter.com/search/?q=%23${SEARCH_CITY}" target="_blank">${searchTerm}</a></h2>
+		<ul>
+			${htmlToRender}
+		</ul>`;
+	console.log(htmlToPass);
+	$('.js-twitter-results').append(htmlToPass);
 }
 
 handleSubmitClick();
