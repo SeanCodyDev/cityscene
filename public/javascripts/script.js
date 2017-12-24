@@ -1,5 +1,6 @@
 //----- NEXT STEPS -----
-//2) News search service - Bing
+//2) Render Bing Results
+//3) STYLE!!!
 //https://www.npmjs.com/package/node-bing-api
 
 let SEARCH_CITY = "";
