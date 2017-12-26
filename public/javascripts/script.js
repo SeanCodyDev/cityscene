@@ -1,6 +1,9 @@
 //----- NEXT STEPS -----
 //2) Render Bing Results
-//3) STYLE!!!
+// Modify Twitter branch to modify city text to remove spaces, characters, and state code (e.g. 'New York, NY' >> newyork), or just use the yelp path
+// cityYelpEvents should take in the CITIES['path'] and use the Yelp events API
+// SEARCH_CITY should point to an index in the CITIES array, not just the text from the button
+//3) STYLE!!! 
 //https://www.npmjs.com/package/node-bing-api
 
 
@@ -36,7 +39,6 @@ function handleSubmitClick(){
 		e.preventDefault();
 		e.stopPropagation();
 		SEARCH_CITY = $(e.currentTarget).text();
-		console.log(logValue);
 		console.log(`SEARCH_CITY is ${SEARCH_CITY}`);
 		// takeSearchTerm();
 		cityYelpPlaces();
