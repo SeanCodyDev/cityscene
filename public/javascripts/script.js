@@ -2,6 +2,7 @@
 //2) Render Bing Results
 // cityYelpEvents should use the Yelp events API
 //3) STYLE!!! 
+// yelp places headers should link to Yelp
 
 let SEARCH_CITY;
 let CITIES = [
@@ -27,7 +28,7 @@ function takeSearchTerm(searchCity){
 
 //function that handles the click of the Submit button
 function handleSubmitClick(){
-	$('.js-search-form').on('click','.js-city-button', e => {
+	$('.js-search-buttons').on('click','.js-city-button', e => {
 
 		console.log('handleSubmitClick ran');
 		e.preventDefault();
@@ -124,7 +125,7 @@ function renderYelpPlacesHtml(res, searchTerm){
 		htmlToRender += `<a href=${res[i]['url']} target="_blank"><li><img class="results-img" src=${res[i]['image_url']}>${res[i]['name']}</li></a>`
 	}
 	let htmlToPass = `
-		<h2>${searchTerm}</h2>
+		<h3>${searchTerm}</h3>
 		<ul>
 			${htmlToRender}
 		</ul>`;
@@ -141,7 +142,7 @@ function renderYelpEventsHtml(res){
 		htmlToRender += `<a href=${res[i]['url']} target="_blank"><li><img class="results-img" src=${res[i]['image_url']}>${res[i]['name']}</li></a>`
 	}
 	let htmlToPass = `
-		<h2>Events</h2>
+		<h3>events</h3>
 		<ul>
 			${htmlToRender}
 		</ul>`;
@@ -160,7 +161,7 @@ function renderTwitterHtml(res, searchTerm){
 		htmlToRender += `<li>${res.statuses[i].text}</li>`
 	}
 	let htmlToPass = `
-		<h2><a href="https://twitter.com/search/?q=%23${SEARCH_CITY['path']}" target="_blank">${searchTerm}</a></h2>
+		<h3><a href="https://twitter.com/search/?q=%23${SEARCH_CITY['path']}" target="_blank">${searchTerm}</a></h3>
 		<ul>
 			${htmlToRender}
 		</ul>`;
@@ -172,10 +173,10 @@ function renderButtons(cities){
 	let citiesButtons = "";
 	for (let i=0; i<cities.length; i++){
 		citiesButtons += `
-		<button class="js-city-button" type="submit" value=${cities[i]['city']}>${cities[i]['city']}</button>
+		<button class="js-city-button city-button" type="submit" value=${cities[i]['city']}>${cities[i]['city']}</button>
 		`
 	}
-	$('.js-search-form').html(citiesButtons);
+	$('.js-search-buttons').html(citiesButtons);
 }
 
 handleSubmitClick();
