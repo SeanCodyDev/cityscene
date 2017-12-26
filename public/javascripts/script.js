@@ -1,13 +1,11 @@
 //----- NEXT STEPS -----
 //2) Render Bing Results
-// Modify Twitter branch to modify city text to remove spaces, characters, and state code (e.g. 'New York, NY' >> newyork), or just use the yelp path
-// cityYelpEvents should take in the CITIES['path'] and use the Yelp events API
-// SEARCH_CITY should point to an index in the CITIES array, not just the text from the button
+// cityYelpEvents should use the Yelp events API
 //3) STYLE!!! 
 //https://www.npmjs.com/package/node-bing-api
 
 
-let SEARCH_CITY = "";
+let SEARCH_CITY;
 let CITIES = [
 	{city: "New York, NY", path: "nyc"},
 	{city: "Chicago, IL", path: "chicago"},
@@ -20,16 +18,14 @@ let CITIES = [
 
 ];
 
-//function that takes in a city search term and assigns it so a global variable SEARCH_TERM
-// Ideally, this takes in a search term and somehow validates it before assigning it to SEARCH_CITY
-// As for creating an MVP, it may be simpler to create hard-coded button options for popular US destinations (e.g. New York, NY; Nashville, TN, etc.)
-// function takeSearchTerm(){
-// 	console.log('takeSearchTerm ran');
-// 	SEARCH_CITY = $(this).attr("value");
-// 	// $('#js-query').val("");
-// 	console.log(`SEARCH_CITY is ${SEARCH_CITY}`);
 
-// };
+function takeSearchTerm(searchCity){
+	for (let i=0; i<CITIES.length; i++){
+		if (searchCity == CITIES[i]['city']){
+			SEARCH_CITY = CITIES[i];
+		}
+	}
+}
 
 //function that handles the click of the Submit button
 function handleSubmitClick(){
@@ -38,9 +34,8 @@ function handleSubmitClick(){
 		console.log('handleSubmitClick ran');
 		e.preventDefault();
 		e.stopPropagation();
-		SEARCH_CITY = $(e.currentTarget).text();
-		console.log(`SEARCH_CITY is ${SEARCH_CITY}`);
-		// takeSearchTerm();
+		let searchText = $(e.currentTarget).text();
+		takeSearchTerm(searchText);
 		cityYelpPlaces();
 		cityYelpEvents();
 		cityTwitterResults();
@@ -62,7 +57,7 @@ function cityYelpPlaces(){
             type: 'POST',
             data: {
             	search: searchTerms[i],
-            	location: SEARCH_CITY
+            	location: SEARCH_CITY['city']
             },
             success: function(res) {
                 // console.log(res);
@@ -87,7 +82,7 @@ function cityYelpEvents(){
 		type: 'POST',
 		data: {
 			search: "events",
-			location: SEARCH_CITY
+			location: SEARCH_CITY['city']
 		},
 		success: function(res) {
                 console.log(res);
@@ -105,12 +100,12 @@ function cityTwitterResults(){
 	console.log('cityTwitterResults ran');
 	$('.js-twitter-results').html(``);
 	let resultsToRender = ``;
-	let searchTerm=`#${SEARCH_CITY}`;
+	let searchTerm=`#${SEARCH_CITY['path']}`;
 	$.ajax({
             url: "/searchTwitter",
             type: 'POST',
             data: {
-            	search: SEARCH_CITY,
+            	search: SEARCH_CITY['path'],
             	result_type: "popular"
             },
             success: function(res) {
@@ -167,7 +162,7 @@ function renderTwitterHtml(res, searchTerm){
 		htmlToRender += `<li>${res.statuses[i].text}</li>`
 	}
 	let htmlToPass = `
-		<h2><a href="https://twitter.com/search/?q=%23${SEARCH_CITY}" target="_blank">${searchTerm}</a></h2>
+		<h2><a href="https://twitter.com/search/?q=%23${SEARCH_CITY['path']}" target="_blank">${searchTerm}</a></h2>
 		<ul>
 			${htmlToRender}
 		</ul>`;
