@@ -2,8 +2,6 @@
 //2) Render Bing Results
 // cityYelpEvents should use the Yelp events API
 //3) STYLE!!! 
-//https://www.npmjs.com/package/node-bing-api
-
 
 let SEARCH_CITY;
 let CITIES = [

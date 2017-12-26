@@ -18,10 +18,6 @@ var clientTwitter = new Twitter({
   access_token_secret: 'rp0xYbJ18FgGpDs4SCl0PQKyFPYnxgIHvn4zIwRVuDjW9'
 });
 
-// ----- BING LIBRARY AND AUTHENTICATION -----
-var Bing = require('node-bing-api')({ accKey: "your-account-key" });
-// Need BING account key - is this actually required? May need a stack overflow question
-
 
 /* GET home page. */
 // IS THIS EVEN RELEVANT FOR ANYTHING?
