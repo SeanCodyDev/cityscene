@@ -29,7 +29,7 @@ body {
   background-color: gray;
 }
 
-.yelp-results-list {
+.yelp-results-list, .yelp-events-list {
 	list-style: none;
 }
 
@@ -71,6 +71,34 @@ a {
 	height: 50px;
 	width: 50px;
 }
+
+/*----- TABBED RESULTS ----- */
+    ul.js-yelp-tabs{
+			margin: 0px;
+			padding: 0px;
+			list-style: none;
+		}
+		ul.js-yelp-tabs li{
+			background: none;
+			color: #222;
+			display: inline-block;
+			padding: 10px 15px;
+			cursor: pointer;
+		}
+
+		ul.js-yelp-tabs li.current{
+			background: #ededed;
+			color: #222;
+		}
+
+		.yelp-results-list{
+			display: none;
+			background: #ededed;
+		}
+
+		.yelp-results-list.current{
+			display: inherit;
+		}
 
 /*----- RESPONSIVE GRID STYLING -----*/
 

@@ -1,6 +1,6 @@
 //----- NEXT STEPS -----
 //2) Render Bing Results
-// cityYelpEvents should use the Yelp events API
+// 
 //3) STYLE (see CSS notes)!!! 
 // yelp places headers should link to Yelp
 
@@ -38,6 +38,7 @@ function handleSubmitClick(){
 		cityYelpPlaces();
 		cityYelpEvents();
 		cityTwitterResults();
+		handleTabs();
 
 		});
 };
@@ -61,11 +62,15 @@ function cityYelpPlaces(){
             success: function(res) {
                 // console.log(res);
             	renderYelpPlacesHtml(res, searchTerms[i]);
+            	$('.js-yelp-tabs :first-child').addClass("current");
+				$('.js-yelp-results ul:first-of-type').addClass("current");
+
 
             }
         });
 
 	}
+
 };
 
 //function that returns event results for city
@@ -110,6 +115,7 @@ function cityTwitterResults(){
             success: function(res) {
             	console.log(res);
             	renderTwitterHtml(res, searchTerm);
+
             }
         });
 
@@ -130,13 +136,19 @@ function renderYelpPlacesHtml(res, searchTerm){
 			<div class="biz-name-container">
 				<a href=${res[i]['url']} target="_blank">${res[i]['name']}</a>
 			</div>
-		</li>`
+		</li>`;
+
+
 	}
-	let htmlToPass = `
-		<h3 class="yelp-results-header">${searchTerm}</h3>
-		<ul class="yelp-results-list">
+	let headerTab =`
+	<li class="tab-link" data-tab="${searchTerm.replace(/\s+/g, '')}">${searchTerm}</li>`;
+	let htmlToPass = 
+		// <h3 class="yelp-results-header">${searchTerm}</h3>
+		`
+		<ul class="yelp-results-list" id="${searchTerm.replace(/\s+/g, '')}">
 			${htmlToRender}
 		</ul>`;
+	$('.js-yelp-tabs').append(headerTab);
 	$('.js-yelp-results').append(htmlToPass);
 }
 
@@ -159,7 +171,7 @@ function renderYelpEventsHtml(res){
 	}
 	let htmlToPass = `
 		<h3 class="yelp-results-header">events</h3>
-		<ul class="yelp-results-list">
+		<ul class="yelp-events-list">
 			${htmlToRender}
 		</ul>`;
 	$('.js-yelp-events').append(htmlToPass);
@@ -183,6 +195,20 @@ function renderTwitterHtml(res, searchTerm){
 		</ul>`;
 	console.log(htmlToPass);
 	$('.js-twitter-results').append(htmlToPass);
+}
+
+//changes tab results content
+function handleTabs(){
+	console.log('handleTabs ran');
+	$('ul.js-yelp-tabs').on('click', '.tab-link', function(){
+		console.log('tab clicked');
+		let tab_id = $(this).attr('data-tab');
+		$('ul.js-yelp-tabs li').removeClass('current');
+		$('.yelp-results-list').removeClass('current');
+
+		$(this).addClass('current');
+		$("#"+tab_id).addClass('current');
+	});
 }
 
 function renderButtons(cities){
