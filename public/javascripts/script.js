@@ -1,7 +1,7 @@
 //----- NEXT STEPS -----
 //2) Render Bing Results
 // cityYelpEvents should use the Yelp events API
-//3) STYLE!!! 
+//3) STYLE (see CSS notes)!!! 
 // yelp places headers should link to Yelp
 
 let SEARCH_CITY;
@@ -122,11 +122,19 @@ function renderYelpPlacesHtml(res, searchTerm){
 	let htmlToRender = "";
 	let numberOfResults = 5;
 	for (let i=0; i<numberOfResults; i++){
-		htmlToRender += `<a href=${res[i]['url']} target="_blank"><li><img class="results-img" src=${res[i]['image_url']}>${res[i]['name']}</li></a>`
+		htmlToRender += `
+		<li class="list-container">
+			<div class="image-container">
+				<a href=${res[i]['url']} target="_blank"><img class="results-img" src=${res[i]['image_url']}></a>
+			</div>
+			<div class="biz-name-container">
+				<a href=${res[i]['url']} target="_blank">${res[i]['name']}</a>
+			</div>
+		</li>`
 	}
 	let htmlToPass = `
-		<h3>${searchTerm}</h3>
-		<ul>
+		<h3 class="yelp-results-header">${searchTerm}</h3>
+		<ul class="yelp-results-list">
 			${htmlToRender}
 		</ul>`;
 	$('.js-yelp-results').append(htmlToPass);
@@ -139,11 +147,19 @@ function renderYelpEventsHtml(res){
 	let htmlToRender = "";
 	let numberOfResults = 5;
 	for (let i=0; i<numberOfResults; i++){
-		htmlToRender += `<a href=${res[i]['url']} target="_blank"><li><img class="results-img" src=${res[i]['image_url']}>${res[i]['name']}</li></a>`
+		htmlToRender += `
+		<li class="list-container">
+			<div class="image-container">
+				<a href=${res[i]['url']} target="_blank"><img class="results-img" src=${res[i]['image_url']}></a>
+			</div>
+			<div class="biz-name-container">
+				<a href=${res[i]['url']} target="_blank">${res[i]['name']}</a>
+			</div>
+		</li>`
 	}
 	let htmlToPass = `
-		<h3>events</h3>
-		<ul>
+		<h3 class="yelp-results-header">events</h3>
+		<ul class="yelp-results-list">
 			${htmlToRender}
 		</ul>`;
 	$('.js-yelp-events').append(htmlToPass);
