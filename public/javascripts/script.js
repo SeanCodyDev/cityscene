@@ -176,6 +176,16 @@ function tweetFormat(tweet){
 	let hashtags = tweet.entities.hashtags;
 	let urls = tweet.entities.urls;
 	let userMentions = tweet.entities.user_mentions;
+
+  	for (let i=0; i<hashtags.length; i++){
+    	tweetText = tweetText.replace(`#${hashtags[i].text}`, `<a href=https://twitter.com/search?q=%23${hashtags[i].text} target="_blank">#${hashtags[i].text}</a>`);
+  	}
+  	for (let i=0; i<urls.length; i++){
+    	tweetText = tweetText.replace(`${urls[i].url}`, `<a href=${urls[i].url} target="_blank">${urls[i].url}</a>`);
+  	}
+  	for (let i=0; i<userMentions.length; i++){
+    	tweetText = tweetText.replace(`@${userMentions[i].screen_name}`, `<a href=https://twitter.com/search?q=%40${userMentions[i].screen_name} target="_blank">@${userMentions[i].screen_name}</a>`);
+  	}
 	return tweetText;
 }
 
@@ -187,8 +197,7 @@ function renderTwitterHtml(res, searchTerm){
 	let htmlToRender = "";
 	let numberOfResults = 5;
 	for (let i=0; i<Math.min(numberOfResults, res.statuses.length); i++){
-		let currentTweet = `${res.statuses[i]}`;
-		console.log(currentTweet);
+		let currentTweet = res.statuses[i];
 		// let currentTweet = `${res.statuses[i].text}`;
 		let formattedTweet = tweetFormat(currentTweet);
 		htmlToRender += `<li>${formattedTweet}</li>`
