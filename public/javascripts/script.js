@@ -169,6 +169,15 @@ function renderYelpEventsHtml(res){
 	$('.js-yelp-events').append(htmlToPass);
 }
 
+//takes in tweets object and current tweet and reformats it to include links
+function tweetFormat(tweet){
+	console.log("tweetFormat ran");
+	let tweetText = tweet.text;
+	let hashtags = tweet.entities.hashtags;
+	let urls = tweet.entities.urls;
+	let userMentions = tweet.entities.user_mentions;
+	return tweetText;
+}
 
 //function to stucutre and render HTML for Twitter Results
 //TO-DO: insert anchor links
@@ -178,7 +187,11 @@ function renderTwitterHtml(res, searchTerm){
 	let htmlToRender = "";
 	let numberOfResults = 5;
 	for (let i=0; i<Math.min(numberOfResults, res.statuses.length); i++){
-		htmlToRender += `<li>${res.statuses[i].text}</li>`
+		let currentTweet = `${res.statuses[i]}`;
+		console.log(currentTweet);
+		// let currentTweet = `${res.statuses[i].text}`;
+		let formattedTweet = tweetFormat(currentTweet);
+		htmlToRender += `<li>${formattedTweet}</li>`
 	}
 	let htmlToPass = `
 		<h3><a href="https://twitter.com/search/?q=%23${SEARCH_CITY['path']}" target="_blank">${searchTerm}</a></h3>
