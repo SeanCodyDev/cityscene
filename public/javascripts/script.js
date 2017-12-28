@@ -130,12 +130,8 @@ function renderYelpPlacesHtml(res, searchTerm){
 	for (let i=0; i<numberOfResults; i++){
 		htmlToRender += `
 		<li class="list-container">
-			<div class="image-container">
-				<a href=${res[i]['url']} target="_blank"><img class="results-img" src=${res[i]['image_url']}></a>
-			</div>
-			<div class="biz-name-container">
-				<a href=${res[i]['url']} target="_blank">${res[i]['name']}</a>
-			</div>
+			<a class="results-img-link" href=${res[i]['url']} target="_blank"><img class="results-img" src=${res[i]['image_url']}></a>
+			<a class="results-link" href=${res[i]['url']} target="_blank">${res[i]['name']}</a>
 		</li>`;
 
 
@@ -161,12 +157,8 @@ function renderYelpEventsHtml(res){
 	for (let i=0; i<numberOfResults; i++){
 		htmlToRender += `
 		<li class="list-container">
-			<div class="image-container">
-				<a href=${res[i]['url']} target="_blank"><img class="results-img" src=${res[i]['image_url']}></a>
-			</div>
-			<div class="biz-name-container">
-				<a href=${res[i]['url']} target="_blank">${res[i]['name']}</a>
-			</div>
+			<a class="results-img-link" href=${res[i]['url']} target="_blank"><img class="results-img" src=${res[i]['image_url']}></a>
+			<a class="results-link" href=${res[i]['url']} target="_blank">${res[i]['name']}</a>
 		</li>`
 	}
 	let htmlToPass = `

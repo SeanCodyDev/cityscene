@@ -1,10 +1,10 @@
 /*----- TO DO -----*/
 /* it is easiest to try styling in codepen... copy HTML out of Chrome DevTools*/
 /* styling when hover over results*/
-/* results tab for places with icons (e.g. coffee mug) https://codepen.io/cssjockey/pen/jGzuK*/
-/* overflow in results containers */
 /* description section in initial page load*/
 /* background image */
+/* twitter results styling */
+/* font selection */
 
 
 
@@ -21,6 +21,7 @@
   padding-left: 20px;
   padding-right: 20px;
   margin: 0 auto;
+  margin-bottom: 10px;
 }
 
 body {
@@ -31,6 +32,8 @@ body {
 
 .yelp-results-list, .yelp-events-list {
 	list-style: none;
+  padding-left: 20px;
+  margin-top: 0px;
 }
 
 li img {
@@ -43,22 +46,24 @@ li img {
   clear: both;
 }
 
-.image-container, .biz-name-container{
-  float:left;
-}
-
-.biz-name-container{
-  padding-top: 20px;
-}
-
 .list-container{
   display: block;
   clear: both;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-right: 10px;
+  border-bottom: 2px gray solid;
+}
+
+.list-container:last-child{
+  border: none;
+}
+
+.list-container a{
+	vertical-align: middle;
 }
 
 li a{
-	padding-left: 10px;
-  padding-top: 15px;
   display: inline-block;
 }
 
@@ -72,6 +77,10 @@ a {
 	width: 50px;
 }
 
+.results-link{
+	padding-left: 5px;
+}
+
 /*----- TABBED RESULTS ----- */
     ul.js-yelp-tabs{
 			margin: 0px;
@@ -79,7 +88,8 @@ a {
 			list-style: none;
 		}
 		ul.js-yelp-tabs li{
-			background: none;
+			background-color: #a6a6a6;
+      		border-radius: 5px 5px 0 0;
 			color: #222;
 			display: inline-block;
 			padding: 10px 15px;
@@ -87,13 +97,13 @@ a {
 		}
 
 		ul.js-yelp-tabs li.current{
-			background: #ededed;
+			background: #d9d9d9;
+      		border-radius: 5px 5px 0 0;
 			color: #222;
 		}
 
 		.yelp-results-list{
 			display: none;
-			background: #ededed;
 		}
 
 		.yelp-results-list.current{
@@ -126,8 +136,7 @@ a {
 
 .results-box{
 	background-color: #d9d9d9;
-  border-radius: 5px;
-
+  	border-radius: 5px;
 }
 
 h1, h2, h3 {
@@ -141,6 +150,7 @@ h1{
 h2, h3 {
 	font-size: 50px;
 	padding-top: 20px;
+	margin-top: 0;
 }
 
 h2{
