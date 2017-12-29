@@ -39,7 +39,7 @@ function handleSubmitClick(){
 		cityYelpEvents();
 		cityTwitterResults();
 		handleTabs();
-
+		bingNews();
 		});
 };
 
@@ -72,6 +72,21 @@ function cityYelpPlaces(){
 	}
 
 };
+
+function bingNews(){
+	console.log('bingNews ran');
+	$.ajax({
+            url: "/bingNews",
+            type: 'POST',
+            data: {
+            	location: SEARCH_CITY['city']
+            },
+            success: function(res) {
+                console.log(res);
+                renderBingResults(res);
+            }
+        });
+}
 
 //function that returns event results for city
 //this uses a different API endpoint than the search API
@@ -148,6 +163,33 @@ function renderYelpPlacesHtml(res, searchTerm){
 	$('.js-yelp-results').append(htmlToPass);
 }
 
+
+function renderBingResults(res){
+	console.log('renderBingResults ran');
+	let htmlToRender = "";
+	let numberOfResults = 5;
+	for (let i=0; i<numberOfResults; i++){
+		let resultImage;
+		if (res.value[i].image != undefined){
+			resultImage = `<a class="" href=${res.value[i]['url']} target="_blank"><img src=${res.value[i].image.thumbnail.contentUrl}></a>` 
+		} else {
+			resultImage = "";
+		}
+		htmlToRender += `
+		<li class="">
+			${resultImage}
+			<a class="" href=${res.value[i]['url']} target="_blank">${res.value[i]['name']}</a>
+		</li>`
+	}
+	console.log(htmlToRender);
+	let htmlToPass = `
+		<h3 class="bing-results-header">news</h3>
+		<ul class="bing-results-list">
+			${htmlToRender}
+		</ul>`;
+	$('.js-bing-results').append(htmlToPass);
+}
+
 //function to structure and render HTML for YelpEvents results
 //TO-DO: modify terms to be more descriptive and to have less redundancy
 function renderYelpEventsHtml(res){
@@ -207,7 +249,7 @@ function renderTwitterHtml(res, searchTerm){
 		<ul>
 			${htmlToRender}
 		</ul>`;
-	console.log(htmlToPass);
+	// console.log(htmlToPass);
 	$('.js-twitter-results').append(htmlToPass);
 }
 
@@ -237,3 +279,4 @@ function renderButtons(cities){
 
 handleSubmitClick();
 renderButtons(CITIES);
+
