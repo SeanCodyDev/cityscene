@@ -2,13 +2,13 @@
 /* it is easiest to try styling in codepen... copy HTML out of Chrome DevTools*/
 /* styling when hover over results*/
 /* description section in initial page load*/
-/* background image */
-/* twitter results styling */
 /* font selection */
 /*https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_parallax*/
 /*http://soulwire.github.io/sketch.js/examples/particles.html*/
 /*https://codepen.io/jackrugile/full/qLCuE*/
-
+/*http://www.color-hex.com/color-palette/2280*/
+/* #343d46 #4f5b66 #65737e #a7adba #c0c5ce */
+/* BKGD: https://www.pexels.com/photo/woman-on-rock-platform-viewing-city-196667/ */
 
 
 
@@ -17,6 +17,55 @@
 * {
   box-sizing: border-box;
   /*font-size: 0;*/
+  /*transition: all 0.5s;*/
+}
+
+html { 
+  background: url(../images/city-bkgd.jpeg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+header{
+	width: 100%;
+	position: fixed;
+	top: 0;
+	height: 80px;
+	padding: 10px;
+	background-color: #4f5b66;
+	border-bottom: black solid 2px;
+	color: white;
+}
+
+
+button#city-menu-button {
+    position: absolute;
+    font-size: 16px;
+    top: 30px;
+    /* right: 0; */
+    border: 0;
+    /* vertical-align: middle; */
+    /* text-align: right; */
+    right: 10px;
+    background-color: inherit;
+    color: white;
+    /* padding-left: 15px; */
+}
+
+#city-menu-button:hover { 
+  cursor: pointer;
+}
+#city-menu-button:before { 
+  content:"+";
+}
+#city-menu-button.active:before { 
+  content:"-";
+}
+
+.hidden{
+	display: none;
 }
 
 .row {
@@ -27,13 +76,17 @@
   margin-bottom: 10px;
 }
 
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: gray;
+.initial-render {
+    margin-top: 100px;
 }
 
-.yelp-results-list, .yelp-events-list {
+body {
+  padding: 0;
+  margin: 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.yelp-results-list, .yelp-events-list, .twitter-results-list, .bing-results-list {
 	list-style: none;
   padding-left: 20px;
   margin-top: 0px;
@@ -45,7 +98,6 @@ li img {
 }
 
 .yelp-results-header{
-  margin: 0;
   clear: both;
 }
 
@@ -56,7 +108,7 @@ li img {
   padding-bottom: 10px;
   margin-right: 10px;
   border-bottom: 2px gray solid;
-}
+  min-height: 70px}
 
 .list-container:last-child{
   border: none;
@@ -84,25 +136,37 @@ a {
 	padding-left: 5px;
 }
 
+p.tweet-text, .news-text{
+	display: inline-block;
+    width: 75%;
+    padding-left: 10px;
+    margin: 0;
+    vertical-align: middle;
+}
+
 /*----- TABBED RESULTS ----- */
     ul.js-yelp-tabs{
 			margin: 0px;
 			padding: 0px;
 			list-style: none;
+			display: flex;
+    		justify-content: space-between;
 		}
 		ul.js-yelp-tabs li{
-			background-color: #a6a6a6;
+			background-color: #4f5b66;
       		border-radius: 5px 5px 0 0;
-			color: #222;
+			color: white;
 			display: inline-block;
 			padding: 10px 15px;
 			cursor: pointer;
+			line-height: 60px;
+    		width: 24%;
 		}
 
 		ul.js-yelp-tabs li.current{
-			background: #d9d9d9;
+			background: #a7adba;
       		border-radius: 5px 5px 0 0;
-			color: #222;
+			color: white;
 		}
 
 		.yelp-results-list{
@@ -138,7 +202,7 @@ a {
 }
 
 .results-box{
-	background-color: #d9d9d9;
+	background-color: #a7adba;
   	border-radius: 5px;
 }
 
@@ -147,26 +211,34 @@ h1, h2, h3 {
 }
 
 h1{
-	font-size: 70px;
+	font-size: 30px;
+	display: inline-block;
+	position: absolute;
+    top: 0px;
+    left: 16px;
 }
 
 h2, h3 {
-	font-size: 50px;
-	padding-top: 20px;
-	margin-top: 0;
+    font-size: 50px;
+    padding-top: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 60px;
 }
 
-h2{
+h2 {
 	font-style: italic;
 }
 
-
+.js-search-buttons{
+	border: solid black 2px;
+}
 
 .city-button{
 	display: block;
 	font-size: 30px;
 	/*position: relative;*/
-	float: left;
+	/*float: left;*/
 	width: 100%;
 	padding: 0;
 	margin: 10px 20px 10px 0;
@@ -175,7 +247,7 @@ h2{
 	line-height: 70px;
 	color: #FFF;
 	border-radius: 5px;
-	transition: all 0.2s ;
+	/*transition: all 0.2s ;*/
 	background: #5DC8CD;
 }
 

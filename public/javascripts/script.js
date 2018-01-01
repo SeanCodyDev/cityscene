@@ -11,6 +11,22 @@ let CITIES = [
 	{city: "Boston, MA", path: "boston"},
 	{city: "Miami, FL", path: "miami"},
 	{city: "Nashville, TN", path: "nashville"},
+	{city: "Indianapolis, IN", path: "indianapolis-in-us"},
+	{city: "Las Vegas, NV", path: "las vegas"},
+	// {city: "Los Angelas, CA", path: "los angelas"},
+	// {city: "Boulder, CO", path: "boulder-ca-us"},
+	// {city: "Portland, OR", path: "portland-or-us"},
+
+	// {city: "New York, NY", path: "nyc"},
+	// {city: "Chicago, IL", path: "chicago"},
+	// {city: "Boston, MA", path: "boston"},
+	// {city: "Miami, FL", path: "miami"},
+	// {city: "Nashville, TN", path: "nashville"},
+	// {city: "Indianapolis, IN", path: "indianapolis-in-us"},
+	// {city: "Las Vegas, NV", path: "las vegas"},
+	// {city: "Los Angelas, CA", path: "los angelas"},
+	// {city: "Boulder, CO", path: "boulder-ca-us"},
+	// {city: "Portland, OR", path: "portland-or-us"}
 
 
 
@@ -33,21 +49,37 @@ function handleSubmitClick(){
 		console.log('handleSubmitClick ran');
 		e.preventDefault();
 		e.stopPropagation();
-		let searchText = $(e.currentTarget).text();
-		takeSearchTerm(searchText);
-		cityYelpPlaces();
-		cityYelpEvents();
-		cityTwitterResults();
-		handleTabs();
-		bingNews();
+		$('.js-search-buttons').slideUp("slow", function(){
+			let searchText = $(e.currentTarget).text();
+			takeSearchTerm(searchText);
+			cityYelpPlaces();
+			cityYelpEvents();
+			cityTwitterResults();
+			handleTabs();
+			bingNews();
+			$('#city-menu-button').removeClass('hidden');
+			$('#city-menu-button').toggleClass('active');
 		});
+	});
 };
 
+$('#city-menu-button').click(function(){
+	$('.js-search-buttons').slideToggle("slow");
+	$('#city-menu-button').toggleClass('active');
+
+});
+
+
+// $('.js-search-buttons').on('click','.js-city-button', function(){
+// 	console.log('BUTTON WAS CLICKED');
+	 
+// });
 
 //function that returns search results for city for coffee, bars, restaurants, and things to do
 //Known Issues: None
 function cityYelpPlaces(){
 	console.log('cityYelpPlaces ran');
+	$('.js-yelp-tabs').html("");
 	$('.js-yelp-results').html(``);
 	let searchTerms = ['coffee', 'restaurants', 'nightlife', 'things to do'];
 	let resultsToRender = ``;
@@ -75,6 +107,7 @@ function cityYelpPlaces(){
 
 function bingNews(){
 	console.log('bingNews ran');
+	$('.js-bing-results').html("");
 	$.ajax({
             url: "/bingNews",
             type: 'POST',
@@ -152,7 +185,7 @@ function renderYelpPlacesHtml(res, searchTerm){
 
 	}
 	let headerTab =`
-	<li class="tab-link" data-tab="${searchTerm.replace(/\s+/g, '')}">${searchTerm}</li>`;
+	<li class="tab-link" data-tab="${searchTerm.replace(/\s+/g, '')}">${searchTerm.replace(/\s+/g, '')}</li>`;
 	let htmlToPass = 
 		// <h3 class="yelp-results-header">${searchTerm}</h3>
 		`
@@ -171,15 +204,16 @@ function renderBingResults(res){
 	for (let i=0; i<numberOfResults; i++){
 		let resultImage;
 		if (res.value[i].image != undefined){
-			resultImage = `<a class="" href=${res.value[i]['url']} target="_blank"><img src=${res.value[i].image.thumbnail.contentUrl}></a>` 
+			resultImage = `<a class="" href=${res.value[i]['url']} target="_blank"><img class="results-img" src=${res.value[i].image.thumbnail.contentUrl}></a>` 
 		} else {
 			resultImage = "";
 		}
 		htmlToRender += `
-		<li class="">
+		<li class="list-container">
 			${resultImage}
-			<a class="" href=${res.value[i]['url']} target="_blank">${res.value[i]['name']}</a>
+			<a class="results-link news-text" href=${res.value[i]['url']} target="_blank"><p>${res.value[i]['name']}</p></a>
 		</li>`
+		// <a class="results-link" href=${res.value[i]['url']} target="_blank">${res.value[i]['name']}</a>
 	}
 	console.log(htmlToRender);
 	let htmlToPass = `
@@ -242,11 +276,15 @@ function renderTwitterHtml(res, searchTerm){
 		let currentTweet = res.statuses[i];
 		// let currentTweet = `${res.statuses[i].text}`;
 		let formattedTweet = tweetFormat(currentTweet);
-		htmlToRender += `<li>${formattedTweet}</li>`
+		htmlToRender += `
+		<li class="list-container">
+			<a class="results-img-link" href=${res.statuses[i].user.url} target="_blank"><img class="results-img" src=${res.statuses[i].user.profile_image_url_https}></a>
+			<p class="tweet-text">${formattedTweet}</p>
+		</li>`
 	}
 	let htmlToPass = `
 		<h3><a href="https://twitter.com/search/?q=%23${SEARCH_CITY['path']}" target="_blank">${searchTerm}</a></h3>
-		<ul>
+		<ul class="twitter-results-list">
 			${htmlToRender}
 		</ul>`;
 	// console.log(htmlToPass);
