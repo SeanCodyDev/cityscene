@@ -16,7 +16,6 @@
 
 * {
   box-sizing: border-box;
-  /*font-size: 0;*/
   /*transition: all 0.5s;*/
 }
 
@@ -28,30 +27,12 @@ html {
   background-size: cover;
 }
 
-header{
-	width: 100%;
-	position: fixed;
-	top: 0;
-	height: 80px;
-	padding: 10px;
-	background-color: #4f5b66;
-	border-bottom: black solid 2px;
-	color: white;
-}
-
 
 button#city-menu-button {
-    position: absolute;
     font-size: 16px;
-    top: 30px;
-    /* right: 0; */
     border: 0;
-    /* vertical-align: middle; */
-    /* text-align: right; */
-    right: 10px;
     background-color: inherit;
     color: white;
-    /* padding-left: 15px; */
 }
 
 #city-menu-button:hover { 
@@ -76,9 +57,7 @@ button#city-menu-button {
   margin-bottom: 10px;
 }
 
-.initial-render {
-    margin-top: 100px;
-}
+
 
 body {
   padding: 0;
@@ -144,38 +123,7 @@ p.tweet-text, .news-text{
     vertical-align: middle;
 }
 
-/*----- TABBED RESULTS ----- */
-    ul.js-yelp-tabs{
-			margin: 0px;
-			padding: 0px;
-			list-style: none;
-			display: flex;
-    		justify-content: space-between;
-		}
-		ul.js-yelp-tabs li{
-			background-color: #4f5b66;
-      		border-radius: 5px 5px 0 0;
-			color: white;
-			display: inline-block;
-			padding: 10px 15px;
-			cursor: pointer;
-			line-height: 60px;
-    		width: 24%;
-		}
 
-		ul.js-yelp-tabs li.current{
-			background: #a7adba;
-      		border-radius: 5px 5px 0 0;
-			color: white;
-		}
-
-		.yelp-results-list{
-			display: none;
-		}
-
-		.yelp-results-list.current{
-			display: inherit;
-		}
 
 /*----- RESPONSIVE GRID STYLING -----*/
 
@@ -190,15 +138,62 @@ p.tweet-text, .news-text{
   clear: both;
 }
 
-.col-2 {
+.col-6 {
   float: left;
   padding-left: 1.04166666%;
   padding-right: 1.04166666%;
 }
 
 /*----- MOBILE DEFAULTS -----*/
-.col-2 {
+
+
+header{
 	width: 100%;
+	position: fixed;
+	top: 0;
+	height: 120px;
+	padding: 10px;
+	background-color: #4f5b66;
+	border-bottom: black solid 2px;
+	color: white;
+}
+
+button#city-menu-button {
+	display: block;
+	margin: 0 auto;
+}
+
+.col-6 {
+	width: 100%;
+}
+
+.initial-render {
+    margin-top: 140px;
+}
+
+/*----- TABBED RESULTS ----- */
+
+ul.js-yelp-tabs li{
+	background-color: #4f5b66;
+	color: white;
+	padding: 10px 15px;
+	cursor: pointer;
+		list-style: none;
+
+	line-height: 60px;
+}
+
+ul.js-yelp-tabs li.current{
+	background: #a7adba;
+	color: white;
+}
+
+.yelp-results-list{
+	display: none;
+}
+
+.yelp-results-list.current{
+	display: inherit;
 }
 
 .results-box{
@@ -212,10 +207,7 @@ h1, h2, h3 {
 
 h1{
 	font-size: 30px;
-	display: inline-block;
-	position: absolute;
-    top: 0px;
-    left: 16px;
+	display: block;
 }
 
 h2, h3 {
@@ -230,9 +222,9 @@ h2 {
 	font-style: italic;
 }
 
-.js-search-buttons{
+/*.js-search-buttons{
 	border: solid black 2px;
-}
+}*/
 
 .city-button{
 	display: block;
@@ -247,6 +239,8 @@ h2 {
 	line-height: 70px;
 	color: #FFF;
 	border-radius: 5px;
+		cursor: pointer;
+
 	/*transition: all 0.2s ;*/
 	background: #5DC8CD;
 }
@@ -257,6 +251,66 @@ h2 {
 
 /*----- Non-mobile, grid -----*/
 @media only screen and (min-width: 640px) {
-  .col-2 {
+  .col-6 {
     width: 50%;
-  }
+}
+
+.city-button{
+	display: inline-block;
+    width: 45%;
+    margin: 10px 10px 0 10px;
+}
+
+.js-search-buttons{
+	font-size: 0;
+	text-align: center;
+}
+
+ button#city-menu-button {
+    position: absolute;
+    top: 30px;
+    border: 0;
+    right: 10px;
+}
+
+.city-button:last-child{
+  margin-bottom: 10px;
+}
+
+.initial-render {
+    margin-top: 100px;
+}
+
+h1{
+	font-size: 30px;
+	display: inline-block;
+	position: absolute;
+    top: 0px;
+    left: 16px;
+}
+
+header{
+	height: 80px;
+
+}
+
+/*----- TABBED RESULTS ----- */
+
+ul.js-yelp-tabs{
+	margin: 0px;
+	padding: 0px;
+	display: flex;
+	justify-content: space-between;
+}
+
+ul.js-yelp-tabs li{
+	border-radius: 5px 5px 0 0;
+	display: inline-block;
+	line-height: 60px;
+	width: 24%;
+}
+
+ul.js-yelp-tabs li.current{
+	border-radius: 5px 5px 0 0;
+
+}
