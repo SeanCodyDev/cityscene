@@ -1,11 +1,4 @@
 /*----- TO DO -----*/
-/* it is easiest to try styling in codepen... copy HTML out of Chrome DevTools*/
-/* styling when hover over results*/
-/* description section in initial page load*/
-/* font selection */
-/*https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_parallax*/
-/*http://soulwire.github.io/sketch.js/examples/particles.html*/
-/*https://codepen.io/jackrugile/full/qLCuE*/
 /*http://www.color-hex.com/color-palette/2280*/
 /* #343d46 #4f5b66 #65737e #a7adba #c0c5ce */
 /* BKGD: https://www.pexels.com/photo/woman-on-rock-platform-viewing-city-196667/ */
@@ -17,6 +10,8 @@
 * {
   box-sizing: border-box;
   /*transition: all 0.5s;*/
+  font-family: 'Josefin Sans', sans-serif;
+
 }
 
 html { 
@@ -25,24 +20,13 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
 }
 
 
-button#city-menu-button {
-    font-size: 16px;
-    border: 0;
-    background-color: inherit;
-    color: white;
-}
-
-#city-menu-button:hover { 
-  cursor: pointer;
-}
-#city-menu-button:before { 
-  content:"+";
-}
-#city-menu-button.active:before { 
-  content:"-";
+body {
+  padding: 0;
+  margin: 0;
 }
 
 .hidden{
@@ -50,77 +34,11 @@ button#city-menu-button {
 }
 
 .row {
-  max-width: 1000px;
-  padding-left: 20px;
-  padding-right: 20px;
-  margin: 0 auto;
-  margin-bottom: 10px;
-}
-
-
-
-body {
-  padding: 0;
-  margin: 0;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-.yelp-results-list, .yelp-events-list, .twitter-results-list, .bing-results-list {
-	list-style: none;
-  padding-left: 20px;
-  margin-top: 0px;
-}
-
-li img {
-  display: inline-block;
-  float: left;
-}
-
-.yelp-results-header{
-  clear: both;
-}
-
-.list-container{
-  display: block;
-  clear: both;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-right: 10px;
-  border-bottom: 2px gray solid;
-  min-height: 70px}
-
-.list-container:last-child{
-  border: none;
-}
-
-.list-container a{
-	vertical-align: middle;
-}
-
-li a{
-  display: inline-block;
-}
-
-a {
-  color: #00B7FF;
-  text-decoration: none;
-}
-
-.results-img{
-	height: 50px;
-	width: 50px;
-}
-
-.results-link{
-	padding-left: 5px;
-}
-
-p.tweet-text, .news-text{
-	display: inline-block;
-    width: 75%;
-    padding-left: 10px;
-    margin: 0;
-    vertical-align: middle;
+	max-width: 1000px;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin: 0 auto;
+	margin-bottom: 10px;
 }
 
 
@@ -158,9 +76,90 @@ header{
 	color: white;
 }
 
+a:hover{
+	text-decoration: underline;
+}
+
+
+.yelp-results-list, .yelp-events-list, .twitter-results-list, .bing-results-list {
+	list-style: none;
+	padding-left: 20px;
+	margin-top: 0px;
+}
+
+li img {
+  display: inline-block;
+  float: left;
+  	height: 50px;
+	width: 50px;
+}
+
+.yelp-results-header{
+  clear: both;
+}
+
+.list-container{
+  display: block;
+  clear: both;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-right: 10px;
+  border-bottom: 2px gray solid;
+  min-height: 70px}
+
+.list-container:last-child{
+  border: none;
+}
+
+.list-container a{
+	vertical-align: middle;
+}
+
+li a, li span{
+	display: inline-block;
+}
+
+.yelp-events-list li a, .yelp-results-list li a{
+	display: table-cell;
+}
+
+a {
+  color: #343d46;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+
+.results-link{
+	padding-left: 5px;
+}
+
+.tweet-text, .news-text{
+	display: inline-block;
+    width: 75%;
+    padding-left: 10px;
+    margin: 0;
+    vertical-align: middle;
+}
+
 button#city-menu-button {
-	display: block;
+    font-size: 16px;
+    border: 0;
+    background-color: inherit;
+    color: white;
+    display: block;
 	margin: 0 auto;
+	outline: 0;
+}
+
+#city-menu-button:hover { 
+  cursor: pointer;
+}
+#city-menu-button:before { 
+  content:"+";
+}
+#city-menu-button.active:before { 
+  content:"-";
 }
 
 .col-6 {
@@ -173,20 +172,40 @@ button#city-menu-button {
 
 /*----- TABBED RESULTS ----- */
 
+ul.js-yelp-tabs{
+	margin: 0px;
+	padding: 0px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.tab-link svg{
+	vertical-align: -0.25em;
+}
+
 ul.js-yelp-tabs li{
 	background-color: #4f5b66;
 	color: white;
 	padding: 10px 15px;
 	cursor: pointer;
-		list-style: none;
-
+	list-style: none;
+	display: inline-block;
 	line-height: 60px;
+	width: 24%;
+	border-radius: 5px 5px 0 0;
+	text-align: center;
 }
 
 ul.js-yelp-tabs li.current{
 	background: #a7adba;
 	color: white;
+	border-radius: 5px 5px 0 0;
 }
+
+ul.js-yelp-tabs li:first-child{
+	border-radius: 5px 5px 0 0;
+}
+
 
 .yelp-results-list{
 	display: none;
@@ -199,6 +218,10 @@ ul.js-yelp-tabs li.current{
 .results-box{
 	background-color: #a7adba;
   	border-radius: 5px;
+}
+
+.js-yelp-results{
+	border-radius: 0 0 5px 5px;
 }
 
 h1, h2, h3 {
@@ -250,7 +273,7 @@ h2 {
 }
 
 /*----- Non-mobile, grid -----*/
-@media only screen and (min-width: 640px) {
+@media screen and (min-width: 1500px) {
   .col-6 {
     width: 50%;
 }
@@ -294,23 +317,5 @@ header{
 
 }
 
-/*----- TABBED RESULTS ----- */
-
-ul.js-yelp-tabs{
-	margin: 0px;
-	padding: 0px;
-	display: flex;
-	justify-content: space-between;
 }
 
-ul.js-yelp-tabs li{
-	border-radius: 5px 5px 0 0;
-	display: inline-block;
-	line-height: 60px;
-	width: 24%;
-}
-
-ul.js-yelp-tabs li.current{
-	border-radius: 5px 5px 0 0;
-
-}

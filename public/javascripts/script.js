@@ -1,8 +1,8 @@
 //----- NEXT STEPS -----
-//2) Render Bing Results
-// 
-//3) STYLE (see CSS notes)!!! 
-// yelp places headers should link to Yelp
+// <i class="fa fa-coffee" aria-hidden="true"></i>
+// <i class="fa fa-glass" aria-hidden="true"></i>
+// <i class="fa fa-cutlery" aria-hidden="true"></i>
+// <i class="fa fa-building" aria-hidden="true"></i>
 
 let SEARCH_CITY;
 let CITIES = [
@@ -13,9 +13,10 @@ let CITIES = [
 	{city: "Nashville, TN", path: "nashville"},
 	{city: "Indianapolis, IN", path: "indianapolis-in-us"},
 	{city: "Las Vegas, NV", path: "las vegas"},
-	// {city: "Los Angelas, CA", path: "los angelas"},
-	// {city: "Boulder, CO", path: "boulder-ca-us"},
-	// {city: "Portland, OR", path: "portland-or-us"},
+	{city: "Los Angelas, CA", path: "la"},
+	{city: "Portland, OR", path: "portland"},
+	{city: "Seattle, WA", path: "seattle"},
+
 
 	// {city: "New York, NY", path: "nyc"},
 	// {city: "Chicago, IL", path: "chicago"},
@@ -81,14 +82,18 @@ function cityYelpPlaces(){
 	console.log('cityYelpPlaces ran');
 	$('.js-yelp-tabs').html("");
 	$('.js-yelp-results').html(``);
-	let searchTerms = ['coffee', 'restaurants', 'nightlife', 'things to do'];
+	let searchTerms = [
+		{term: 'coffee', icon: '<i class="fa fa-coffee fa-2x" aria-hidden="true"></i>' }, 
+		{term: 'restaurants', icon:'<i class="fa fa-utensils fa-2x" aria-hidden="true"></i>'}, 
+		{term: 'nightlife', icon:'<i class="fa fa-glass-martini fa-2x" aria-hidden="true"></i>'}, 
+		{term: 'things to do', icon:'<i class="fa fa-building fa-2x" aria-hidden="true"></i>'}];
 	let resultsToRender = ``;
 	for (let i=0; i<searchTerms.length; i++){
 		$.ajax({
             url: "/searchYelpPlaces",
             type: 'POST',
             data: {
-            	search: searchTerms[i],
+            	search: searchTerms[i]['term'],
             	location: SEARCH_CITY['city']
             },
             success: function(res) {
@@ -184,12 +189,13 @@ function renderYelpPlacesHtml(res, searchTerm){
 
 
 	}
+	// <li class="tab-link" data-tab="${searchTerm.replace(/\s+/g, '')}">${searchTerm.replace(/\s+/g, '')}</li>;
 	let headerTab =`
-	<li class="tab-link" data-tab="${searchTerm.replace(/\s+/g, '')}">${searchTerm.replace(/\s+/g, '')}</li>`;
+	<li class="tab-link" data-tab="${searchTerm['term'].replace(/\s+/g, '')}">${searchTerm['icon']}</li>`;
 	let htmlToPass = 
 		// <h3 class="yelp-results-header">${searchTerm}</h3>
 		`
-		<ul class="yelp-results-list" id="${searchTerm.replace(/\s+/g, '')}">
+		<ul class="yelp-results-list" id="${searchTerm['term'].replace(/\s+/g, '')}">
 			${htmlToRender}
 		</ul>`;
 	$('.js-yelp-tabs').append(headerTab);
@@ -211,7 +217,7 @@ function renderBingResults(res){
 		htmlToRender += `
 		<li class="list-container">
 			${resultImage}
-			<a class="results-link news-text" href=${res.value[i]['url']} target="_blank"><p>${res.value[i]['name']}</p></a>
+			<a class="results-link news-text" href=${res.value[i]['url']} target="_blank">${res.value[i]['name']}</a>
 		</li>`
 		// <a class="results-link" href=${res.value[i]['url']} target="_blank">${res.value[i]['name']}</a>
 	}
