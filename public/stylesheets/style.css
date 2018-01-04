@@ -131,7 +131,7 @@ a {
 
 
 .results-link{
-	padding-left: 5px;
+	padding-left: 15px;
 }
 
 .tweet-text, .news-text{
@@ -273,7 +273,7 @@ h2 {
 }
 
 /*----- Non-mobile, grid -----*/
-@media screen and (min-width: 1500px) {
+@media screen and (min-width: 680px) {
   .col-6 {
     width: 50%;
 }
