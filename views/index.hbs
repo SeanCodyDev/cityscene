@@ -6,33 +6,35 @@
 	<button class="hidden active" id="city-menu-button"> CITIES</button>
 </header>
 
-<div class="initial-render row">
-	{{!-- <h2>where would you like to go?</h2> --}}
-	<div class="js-search-buttons">
+<main>
+	<div class="initial-render row">
+		{{!-- <h2>where would you like to go?</h2> --}}
+		<div class="js-search-buttons">
+		</div>
 	</div>
-</div>
 
-<div class="js-results">
-	<div class="row">
-		<div class="col-6">
-			<div class="js-yelp-tabs-wrapper">
-				<ul class="js-yelp-tabs">
-				</ul>
+	<div class="js-results">
+		<div class="row">
+			<div class="col-6">
+				<div class="js-yelp-tabs-wrapper">
+					<ul class="js-yelp-tabs">
+					</ul>
+				</div>
+				<div class="js-yelp-results results-box"></div>
 			</div>
-			<div class="js-yelp-results results-box"></div>
+			<div class="col-6">
+				<div class="js-yelp-events results-box"></div>
+			</div>
 		</div>
-		<div class="col-6">
-			<div class="js-yelp-events results-box"></div>
+		<div class="row">
+			<div class="col-6">
+				<div class="js-twitter-results results-box"></div>
+			</div>
+			<div class="col-6">
+				<div class="js-bing-results results-box"></div>
+			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-6">
-			<div class="js-twitter-results results-box"></div>
-		</div>
-		<div class="col-6">
-			<div class="js-bing-results results-box"></div>
-		</div>
-	</div>
-</div>
+</main>
 
 

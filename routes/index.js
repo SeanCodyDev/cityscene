@@ -22,7 +22,7 @@ var clientTwitter = new Twitter({
 /* GET home page. */
 // IS THIS EVEN RELEVANT FOR ANYTHING?
 router.get('/', function(req, res, next) {
-  		res.render('index', { title: 'Sean'});
+  		res.render('index', { title: 'CiTYSCENE | Discover Your City'});
 	});
 
 

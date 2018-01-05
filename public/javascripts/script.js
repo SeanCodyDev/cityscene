@@ -6,29 +6,16 @@
 
 let SEARCH_CITY;
 let CITIES = [
-	{city: "New York, NY", path: "nyc"},
+	{city: "New York, NY", path: "newyork"},
 	{city: "Chicago, IL", path: "chicago"},
 	{city: "Boston, MA", path: "boston"},
 	{city: "Miami, FL", path: "miami"},
 	{city: "Nashville, TN", path: "nashville"},
-	{city: "Indianapolis, IN", path: "indianapolis-in-us"},
-	{city: "Las Vegas, NV", path: "las vegas"},
-	{city: "Los Angelas, CA", path: "la"},
+	{city: "Indianapolis, IN", path: "indianapolis"},
+	{city: "Las Vegas, NV", path: "lasvegas"},
+	{city: "Los Angelas, CA", path: "losangelas"},
 	{city: "Portland, OR", path: "portland"},
 	{city: "Seattle, WA", path: "seattle"},
-
-
-	// {city: "New York, NY", path: "nyc"},
-	// {city: "Chicago, IL", path: "chicago"},
-	// {city: "Boston, MA", path: "boston"},
-	// {city: "Miami, FL", path: "miami"},
-	// {city: "Nashville, TN", path: "nashville"},
-	// {city: "Indianapolis, IN", path: "indianapolis-in-us"},
-	// {city: "Las Vegas, NV", path: "las vegas"},
-	// {city: "Los Angelas, CA", path: "los angelas"},
-	// {city: "Boulder, CO", path: "boulder-ca-us"},
-	// {city: "Portland, OR", path: "portland-or-us"}
-
 
 
 
@@ -183,7 +170,7 @@ function renderYelpPlacesHtml(res, searchTerm){
 	for (let i=0; i<numberOfResults; i++){
 		htmlToRender += `
 		<li class="list-container">
-			<a class="results-img-link" href=${res[i]['url']} target="_blank"><img class="results-img" src=${res[i]['image_url']}></a>
+			<a class="results-img-link" href=${res[i]['url']} target="_blank"><img class="results-img" src=${res[i]['image_url']} alt="${res[i]['name']} image"></a>
 			<a class="results-link" href=${res[i]['url']} target="_blank">${res[i]['name']}</a>
 		</li>`;
 
@@ -210,7 +197,7 @@ function renderBingResults(res){
 	for (let i=0; i<numberOfResults; i++){
 		let resultImage;
 		if (res.value[i].image != undefined){
-			resultImage = `<a class="" href=${res.value[i]['url']} target="_blank"><img class="results-img" src=${res.value[i].image.thumbnail.contentUrl}></a>` 
+			resultImage = `<a class="" href=${res.value[i]['url']} target="_blank"><img class="results-img" src=${res.value[i].image.thumbnail.contentUrl} alt="story image"></a>` 
 		} else {
 			resultImage = "";
 		}
@@ -239,7 +226,7 @@ function renderYelpEventsHtml(res){
 	for (let i=0; i<numberOfResults; i++){
 		htmlToRender += `
 		<li class="list-container">
-			<a class="results-img-link" href=${res[i]['url']} target="_blank"><img class="results-img" src=${res[i]['image_url']}></a>
+			<a class="results-img-link" href=${res[i]['url']} target="_blank"><img class="results-img" src=${res[i]['image_url']} alt="${res[i]['name']} photo"></a>
 			<a class="results-link" href=${res[i]['url']} target="_blank">${res[i]['name']}</a>
 		</li>`
 	}
@@ -284,7 +271,7 @@ function renderTwitterHtml(res, searchTerm){
 		let formattedTweet = tweetFormat(currentTweet);
 		htmlToRender += `
 		<li class="list-container">
-			<a class="results-img-link" href=${res.statuses[i].user.url} target="_blank"><img class="results-img" src=${res.statuses[i].user.profile_image_url_https}></a>
+			<a class="results-img-link" href=${res.statuses[i].user.url} target="_blank"><img class="results-img" src=${res.statuses[i].user.profile_image_url_https} alt="tweet photo"></a>
 			<p class="tweet-text">${formattedTweet}</p>
 		</li>`
 	}

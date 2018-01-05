@@ -15,7 +15,7 @@
 }
 
 html { 
-  background: url(../images/city-bkgd.jpeg) no-repeat center center fixed; 
+  background: url(../images/city-bkgd.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -260,7 +260,7 @@ h2 {
 	font-weight: 600;
 	text-align: center;
 	line-height: 70px;
-	color: #FFF;
+	color: #2B2B2B;
 	border-radius: 5px;
 		cursor: pointer;
 
