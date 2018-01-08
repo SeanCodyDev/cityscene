@@ -305,7 +305,9 @@ function renderButtons(cities){
 		<button class="js-city-button city-button" type="submit" value=${cities[i]['city']}>${cities[i]['city']}</button>
 		`
 	}
-	$('.js-search-buttons').html(citiesButtons);
+	$('.js-search-buttons').append(citiesButtons);
+		// $('.js-search-buttons').html(citiesButtons);
+
 }
 
 handleSubmitClick();

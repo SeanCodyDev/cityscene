@@ -80,6 +80,30 @@ a:hover{
 	text-decoration: underline;
 }
 
+.about-text{
+	background-color: #4f5b66;
+	border: black solid 2px;
+	border-radius: 5px;
+	color: white;
+	text-align: center;
+}
+
+.about-text *{
+	padding: 0 10px 0 10px;
+}
+
+.about-text h2{
+	font-size: 36px;
+	font-style: normal;
+	margin-top: 5px;
+
+}
+
+.about-text p{
+	font-size: 18px;
+
+}
+
 
 .yelp-results-list, .yelp-events-list, .twitter-results-list, .bing-results-list {
 	list-style: none;
