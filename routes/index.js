@@ -30,18 +30,12 @@ router.get('/', function(req, res, next) {
 
 // ----- YELP PLACES ROUTER -----
 router.post('/searchYelpPlaces', function(req, res, next) {
-
-	// //console.log(req.body);
-	// //console.log(req.body.search);
-	//console.log('hello from YelpPlaces Router');
-
 	client.search({
 		term: req.body.search,
 		location: req.body.location
 	}).then(response => {
 		let yelpResponse = response.jsonBody.businesses;
-		//console.log(typeof yelpResponse);
-		//QUESTION: what does this line specifically do???
+		console.log(yelpResponse);
 		res.json(yelpResponse);
 	});
 });
