@@ -13,7 +13,7 @@ let CITIES = [
 	{city: "Nashville, TN", path: "nashville"},
 	{city: "Indianapolis, IN", path: "indianapolis"},
 	{city: "Las Vegas, NV", path: "lasvegas"},
-	{city: "Los Angelas, CA", path: "losangelas"},
+	{city: "Los Angeles, CA", path: "losangeles"},
 	{city: "Portland, OR", path: "portland"},
 	{city: "Seattle, WA", path: "seattle"},
 
@@ -21,7 +21,7 @@ let CITIES = [
 
 ];
 
-
+//this function returns an object from the CITIES array based on the city button clicked
 function takeSearchTerm(searchCity){
 	for (let i=0; i<CITIES.length; i++){
 		if (searchCity == CITIES[i]['city']){
@@ -58,15 +58,10 @@ $('#city-menu-button').click(function(){
 });
 
 
-// $('.js-search-buttons').on('click','.js-city-button', function(){
-// 	console.log('BUTTON WAS CLICKED');
-	 
-// });
-
 //function that returns search results for city for coffee, bars, restaurants, and things to do
-//Known Issues: None
 function cityYelpPlaces(){
 	console.log('cityYelpPlaces ran');
+	//clear any previous results
 	$('.js-yelp-tabs').html("");
 	$('.js-yelp-results').html(``);
 	let searchTerms = [
@@ -114,9 +109,6 @@ function bingNews(){
 }
 
 //function that returns event results for city
-//this uses a different API endpoint than the search API
-//currently hardcoded to test "indianapolis-in-us"
-//Known Issues: currently not working... see routes/index.js
 function cityYelpEvents(){
 	console.log('cityYelpEvents ran');
 	$('.js-yelp-events').html(``);
@@ -137,9 +129,6 @@ function cityYelpEvents(){
 
 };
 
-// HOW do we display these results in the typical Twitter styling, including anchor links to handles and hashtags???
-// Tweet HTML/CSS: https://codepen.io/jsweetie/pen/dXLyYG, 
-//If there is a space in the city name (e.g. New York), the space needs to be removed - this can be addressed with hard-coded button search options
 function cityTwitterResults(){
 	console.log('cityTwitterResults ran');
 	$('.js-twitter-results').html(``);
@@ -162,7 +151,6 @@ function cityTwitterResults(){
 }
 
 //function to structure and render HTML for YelpPlaces results
-//TO-DO: modify terms to be more descriptive and to have less redundancy
 function renderYelpPlacesHtml(res, searchTerm){
 	console.log('renderYelpPlacesHtml ran');
 	let htmlToRender = "";
@@ -306,7 +294,6 @@ function renderButtons(cities){
 		`
 	}
 	$('.js-search-buttons').append(citiesButtons);
-		// $('.js-search-buttons').html(citiesButtons);
 
 }
 
